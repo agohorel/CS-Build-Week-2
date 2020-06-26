@@ -13,14 +13,18 @@ class Solution:
             result = self.binary_search(nums[low_1:high_1], target)
         else:
             result = self.binary_search(nums[low_2:high_2], target)
-
-
+            # add the length of the first sub-list to the found index from the second sub-list
+            result += len(nums[low_1:high_1])
+        
         # if not already found, search the remaining sub-list 
         if result == -1:
-            # add the length of the first sub-list to the found index from the second sub-list
-            result = self.binary_search(nums[low_2:high_2], target) + len(nums[low_1:high_1])
-            return result
+            if len(nums[low_1:high_1]) > len(nums[low_2:high_2]): 
+                result = self.binary_search(nums[low_2:high_2], target) 
+                result += len(nums[low_1:high_1])
+            else:
+                result = self.binary_search(nums[low_1:high_1], target) 
 
+            return result
 
         return result
 
@@ -47,7 +51,8 @@ class Solution:
                 return idx+1
             
 
-nums = [4, 5, 6, 7, 0, 1, 2]
+# nums = [4, 5, 6, 7, 0, 1, 2]
+nums = [4, 5, 6, 0, 1, 2, 3]
 
 s = Solution()
 print(s.search(nums, 6))
